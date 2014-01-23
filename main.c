@@ -23,9 +23,14 @@
 #include <linux/mutex.h>
 #include <linux/crc-itu-t.h>
 
+#include <net/mac80211.h>
+
 //#include "usb_test.h"
 //#include "rt73usb.h"
 //#include "usb_test_hw.h"
+
+
+
 
 /* Define these values to match your devices */
 //TODO: Find these IDs
@@ -628,7 +633,7 @@ static int mac_set_tim (struct ieee80211_hw *hw, struct ieee80211_sta *sta,bool 
 {  
 	return 0;
 };
-static int ut_mac_set_key (struct ieee80211_hw *hw, enum set_key_cmd cmd,
+static int mac_set_key (struct ieee80211_hw *hw, enum set_key_cmd cmd,
 			struct ieee80211_vif *vif, struct ieee80211_sta *sta,
 			struct ieee80211_key_conf *key)
 {  
@@ -687,7 +692,8 @@ static bool mac_tx_frames_pending (struct ieee80211_hw *hw)
 
 static const struct ieee80211_ops mac80211_ops = {
 	.tx			= mac_tx,
-	.start			= mac_start,
+//	.start			= mac_start,
+/*
 	.stop			= mac_stop,
 	.add_interface		= mac_add_interface,
 	.remove_interface	= mac_remove_interface,
@@ -707,6 +713,7 @@ static const struct ieee80211_ops mac80211_ops = {
 	.get_antenna		= mac_get_antenna,
 	.get_ringparam		= mac_get_ringparam,
 	.tx_frames_pending	= mac_tx_frames_pending,
+*/
 };
 
 
@@ -721,7 +728,7 @@ static int usb_probe(struct usb_interface *usb_intf,
 	struct usb_device *usb_dev;
 	int status = 0;
 	struct ieee80211_hw *hw;
-	struct rt2x00_dev *rt2x00dev;	
+//	struct rt2x00_dev *rt2x00dev;	//TODO: fix
 
 	status = skel_probe(usb_intf, id);
 	if (status) {
@@ -733,14 +740,13 @@ static int usb_probe(struct usb_interface *usb_intf,
 	usb_dev = usb_get_dev(usb_dev);
 	usb_reset_device(usb_dev);
 	
-	hw = ieee80211_alloc_hw(sizeof(struct rt2x00_dev), (&ut_ops)->mac80211_ops);	
+//	hw = ieee80211_alloc_hw(sizeof(struct rt2x00_dev), (&ut_ops)->mac80211_ops);	 //TODO: fix
 	if(!hw) {
 		printk(KERN_WARNING "UT: error in alloc 80211 hw. \n");
 		goto error;
 	} else {
-		printk(KERN_INFO "UT: Priv size is %lu", sizeof(struct rt2x00_dev));
 		printk(KERN_INFO "UT: 80211 hw allocated. \n");
-		print_hw_info(hw);
+//		print_hw_info(hw);
 	}
 	
 	usb_set_intfdata(usb_intf, hw);  
