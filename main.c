@@ -33,14 +33,14 @@
 
 
 /* Define these values to match your devices */
-//TODO: Find these IDs
-#define USB_SKEL_VENDOR_ID	0x148f 
-#define USB_SKEL_PRODUCT_ID	0x2573
+//Find these IDs using lsusb command
+#define USB_SKEL_VENDOR_ID	0x0846 
+#define USB_SKEL_PRODUCT_ID	0x9030
 
 /* table of devices that work with this driver */
 static const struct usb_device_id skel_table[] = {
 	{ USB_DEVICE(USB_SKEL_VENDOR_ID, USB_SKEL_PRODUCT_ID) },
-	{ }					/* Terminating entry */
+	{ }	/* Terminating entry */
 };
 MODULE_DEVICE_TABLE(usb, skel_table);
 
