@@ -25,7 +25,7 @@
 
 #include <net/mac80211.h>
 
-//#include "usb_test.h"
+#include "wna1100.h"
 //#include "rt73usb.h"
 //#include "usb_test_hw.h"
 
@@ -593,130 +593,131 @@ error:
 }
 
 /**************** WNA1100 operations *************/
-/*
- * Firmware functions
- */
-//TODO: load firmware etc.
 
-//TODO: inits, probes
+
 
 
 /***************** WNA: 80211 operations *******************/
-/* the functions should migrate to mac.c little by little */
-static void mac_tx (struct ieee80211_hw *hw, 
+//TODO: the functions should migrate to mac.c little by little 
+static void wna_tx (struct ieee80211_hw *hw, 
 			struct ieee80211_tx_control *control,
 			struct sk_buff *skb)
 {  
 };
 
-static void mac_stop (struct ieee80211_hw *hw)
+static int wna_start(struct ieee80211_hw *hw)
+{
+	return 0;
+}
+
+
+static void wna_stop (struct ieee80211_hw *hw)
 {  
 };
-static int mac_add_interface(struct ieee80211_hw *hw, struct ieee80211_vif *vif)
+static int wna_add_interface(struct ieee80211_hw *hw, struct ieee80211_vif *vif)
 {  
 	return 0;
 };
-static void mac_remove_interface (struct ieee80211_hw *hw,
+static void wna_remove_interface (struct ieee80211_hw *hw,
 					struct ieee80211_vif *vif)
 {  
 };
-static int mac_config (struct ieee80211_hw *hw, u32 changed)
+static int wna_config (struct ieee80211_hw *hw, u32 changed)
 {  
 	return 0;
 };
-static void mac_configure_filter (struct ieee80211_hw *hw,
+static void wna_configure_filter (struct ieee80211_hw *hw,
 					unsigned int changed_flags,
 					unsigned int *total_flags,u64 multicast)
 {  
 };
-static int mac_set_tim (struct ieee80211_hw *hw, struct ieee80211_sta *sta,bool set)
+/*
+static int wna_set_tim (struct ieee80211_hw *hw, struct ieee80211_sta *sta,bool set)
 {  
 	return 0;
 };
-static int mac_set_key (struct ieee80211_hw *hw, enum set_key_cmd cmd,
+static int wna_set_key (struct ieee80211_hw *hw, enum set_key_cmd cmd,
 			struct ieee80211_vif *vif, struct ieee80211_sta *sta,
 			struct ieee80211_key_conf *key)
 {  
 	return 0;
 };
-static void mac_sw_scan_start (struct ieee80211_hw *hw)
+static void wna_sw_scan_start (struct ieee80211_hw *hw)
 {  
 };
-static void mac_sw_scan_complete (struct ieee80211_hw *hw)
+static void wna_sw_scan_complete (struct ieee80211_hw *hw)
 {  
 };
-static int mac_get_stats (struct ieee80211_hw *hw,
+static int wna_get_stats (struct ieee80211_hw *hw,
 				struct ieee80211_low_level_stats *stats)
 {
 	return 0;  
 };
-static void mac_bss_info_changed (struct ieee80211_hw *hw,
+static void wna_bss_info_changed (struct ieee80211_hw *hw,
 					struct ieee80211_vif *vif,
 					struct ieee80211_bss_conf *info,u32 changed)
 {  
 };
-static int mac_conf_tx (struct ieee80211_hw *hw,
+static int wna_conf_tx (struct ieee80211_hw *hw,
 			struct ieee80211_vif *vif, u16 ac,
 			const struct ieee80211_tx_queue_params *params)
 {  
 	return 0;
 };
-static u64 mac_get_tsf (struct ieee80211_hw *hw, struct ieee80211_vif *vif)
+static u64 wna_get_tsf (struct ieee80211_hw *hw, struct ieee80211_vif *vif)
 {  	
 	return 0;
 };
-static void mac_rfkill_poll (struct ieee80211_hw *hw)
+static void wna_rfkill_poll (struct ieee80211_hw *hw)
 {  
 };
-static void mac_flush (struct ieee80211_hw *hw, u32 queues, bool drop)
+static void wna_flush (struct ieee80211_hw *hw, u32 queues, bool drop)
 {  
 };
-static int mac_set_antenna (struct ieee80211_hw *hw, u32 tx_ant, u32 rx_ant)
-{  
-	return 0;
-};
-static int mac_get_antenna (struct ieee80211_hw *hw, u32 *tx_ant, u32 *rx_ant)
+static int wna_set_antenna (struct ieee80211_hw *hw, u32 tx_ant, u32 rx_ant)
 {  
 	return 0;
 };
-static int mac_get_ringparam (struct ieee80211_hw *hw,
+static int wna_get_antenna (struct ieee80211_hw *hw, u32 *tx_ant, u32 *rx_ant)
+{  
+	return 0;
+};
+static int wna_get_ringparam (struct ieee80211_hw *hw,
 				u32 *tx, u32 *tx_max, u32 *rx, u32 *rx_max)
 {  
 	return 0;
 };
-static bool mac_tx_frames_pending (struct ieee80211_hw *hw)
+static bool wna_tx_frames_pending (struct ieee80211_hw *hw)
 {  
 	return true;
 };
+*/
 
-
-static const struct ieee80211_ops mac80211_ops = {
-	.tx			= mac_tx,
-//	.start			= mac_start,
+static const struct ieee80211_ops wna_80211_ops = {
+	.tx					= wna_tx,
+ 	.start				= wna_start,
+	.stop				= wna_stop,
+	.add_interface		= wna_add_interface,
+	.remove_interface	= wna_remove_interface,
+	.config				= wna_config,
+	.configure_filter	= wna_configure_filter,
 /*
-	.stop			= mac_stop,
-	.add_interface		= mac_add_interface,
-	.remove_interface	= mac_remove_interface,
-	.config			= mac_config,
-	.configure_filter	= mac_configure_filter,
-	.set_tim		= mac_set_tim,
-	.set_key		= mac_set_key,
-	.sw_scan_start		= mac_sw_scan_start,
-	.sw_scan_complete	= mac_sw_scan_complete,
-	.get_stats		= mac_get_stats,
-	.bss_info_changed	= mac_bss_info_changed,
-	.conf_tx		= mac_conf_tx,
-	.get_tsf		= mac_get_tsf,
-	.rfkill_poll		= mac_rfkill_poll,
-	.flush			= mac_flush,
-	.set_antenna		= mac_set_antenna,
-	.get_antenna		= mac_get_antenna,
-	.get_ringparam		= mac_get_ringparam,
-	.tx_frames_pending	= mac_tx_frames_pending,
+	.set_tim			= wna_set_tim,
+	.set_key			= wna_set_key,
+	.sw_scan_start		= wna_sw_scan_start,
+	.sw_scan_complete	= wna_sw_scan_complete,
+	.get_stats			= wna_get_stats,
+	.bss_info_changed	= wna_bss_info_changed,
+	.conf_tx			= wna_conf_tx,
+	.get_tsf			= wna_get_tsf,
+	.rfkill_poll		= wna_rfkill_poll,
+	.flush				= wna_flush,
+	.set_antenna		= wna_set_antenna,
+	.get_antenna		= wna_get_antenna,
+	.get_ringparam		= wna_get_ringparam,
+	.tx_frames_pending	= wna_tx_frames_pending,
 */
 };
-
-
 
 
 
@@ -727,8 +728,8 @@ static int usb_probe(struct usb_interface *usb_intf,
 	
 	struct usb_device *usb_dev;
 	int status = 0;
-//	struct ieee80211_hw *hw;
-//	struct rt2x00_dev *rt2x00dev;	//TODO: fix
+	struct ieee80211_hw *hw;
+//	struct ath9k_htc_priv *priv;
 
 	status = skel_probe(usb_intf, id);
 	if (status) {
@@ -742,19 +743,16 @@ static int usb_probe(struct usb_interface *usb_intf,
 	usb_dev = usb_get_dev(usb_dev);
 	usb_reset_device(usb_dev);
 
-// TODO: define driver struct here
-/*
-	hw = ieee80211_alloc_hw(sizeof(struct rt2x00_dev), (&ut_ops)->mac80211_ops);	 //TODO: fix
+	hw = ieee80211_alloc_hw(sizeof(struct ath9k_htc_priv), &wna_80211_ops);	 
 	if(!hw) {
-		printk(KERN_WARNING "UT: error in alloc 80211 hw. \n");
+		printk(KERN_WARNING "WNA: error in alloc 80211 hw. \n");
 		goto error;
 	} else {
-		printk(KERN_INFO "UT: 80211 hw allocated. \n");
-//		print_hw_info(hw);
+		printk(KERN_INFO "WNA: 80211 hw allocated. \n");
 	}
 
 	usb_set_intfdata(usb_intf, hw);  
-*/		
+		
 	printk(KERN_INFO "WNA: probing finished. \n");
 	
 	return 0;
@@ -768,15 +766,15 @@ static void usb_disconnect(struct usb_interface *usb_intf)
 {
 	struct usb_skel *dev;
 	
-//	struct ieee80211_hw *hw = usb_get_intfdata(usb_intf);
+	struct ieee80211_hw *hw = usb_get_intfdata(usb_intf);
 	
 //	int minor = usb_intf->minor;
-/*	
+	
 	printk(KERN_INFO "WNA: disconnecting... \n");	
 	printk(KERN_INFO "WNA: freeing ieee80211 hw... \n");	
 	ieee80211_free_hw(hw);
 	printk(KERN_INFO "WNA: ieee80211 hw freed. \n");		
-*/
+
 	printk(KERN_INFO "WNA: nulling USB interface data... \n");	
 	dev = usb_get_intfdata(usb_intf);
 	usb_set_intfdata(usb_intf, NULL);
