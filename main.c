@@ -739,7 +739,8 @@ static int usb_probe(struct usb_interface *usb_intf,
 	usb_dev = interface_to_usbdev(usb_intf);
 	usb_dev = usb_get_dev(usb_dev);
 	usb_reset_device(usb_dev);
-	
+
+//	need driver struct here 	
 //	hw = ieee80211_alloc_hw(sizeof(struct rt2x00_dev), (&ut_ops)->mac80211_ops);	 //TODO: fix
 	if(!hw) {
 		printk(KERN_WARNING "UT: error in alloc 80211 hw. \n");
