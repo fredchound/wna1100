@@ -581,7 +581,7 @@ static int skel_probe(struct usb_interface *interface,
 
 	/* let the user know what node this device is now attached to */
 	dev_info(&interface->dev,
-		 "UT: USB Skeleton device now attached to USBSkel-%d",
+		 "\nWNA: USB Skeleton device now attached to USBSkel-%d",
 		 interface->minor);
 	return 0;
 
@@ -645,7 +645,7 @@ static void mac_sw_scan_start (struct ieee80211_hw *hw)
 static void mac_sw_scan_complete (struct ieee80211_hw *hw)
 {  
 };
-static int ut_mac_get_stats (struct ieee80211_hw *hw,
+static int mac_get_stats (struct ieee80211_hw *hw,
 				struct ieee80211_low_level_stats *stats)
 {
 	return 0;  
@@ -727,21 +727,24 @@ static int usb_probe(struct usb_interface *usb_intf,
 	
 	struct usb_device *usb_dev;
 	int status = 0;
-	struct ieee80211_hw *hw;
+//	struct ieee80211_hw *hw;
 //	struct rt2x00_dev *rt2x00dev;	//TODO: fix
 
 	status = skel_probe(usb_intf, id);
 	if (status) {
-		printk(KERN_WARNING "UT: unable to probe.\n");
+		printk(KERN_WARNING "WNA: unable to probe.\n");
 		goto error;
 	}
+	printk(KERN_INFO "WNA: probing. \n");
+
 	
 	usb_dev = interface_to_usbdev(usb_intf);
 	usb_dev = usb_get_dev(usb_dev);
 	usb_reset_device(usb_dev);
 
-//	need driver struct here 	
-//	hw = ieee80211_alloc_hw(sizeof(struct rt2x00_dev), (&ut_ops)->mac80211_ops);	 //TODO: fix
+// TODO: define driver struct here
+/*
+	hw = ieee80211_alloc_hw(sizeof(struct rt2x00_dev), (&ut_ops)->mac80211_ops);	 //TODO: fix
 	if(!hw) {
 		printk(KERN_WARNING "UT: error in alloc 80211 hw. \n");
 		goto error;
@@ -749,11 +752,10 @@ static int usb_probe(struct usb_interface *usb_intf,
 		printk(KERN_INFO "UT: 80211 hw allocated. \n");
 //		print_hw_info(hw);
 	}
-	
+
 	usb_set_intfdata(usb_intf, hw);  
-	
-	
-	printk(KERN_INFO "UT: UT probing finished. \n");
+*/		
+	printk(KERN_INFO "WNA: probing finished. \n");
 	
 	return 0;
 
@@ -766,15 +768,15 @@ static void usb_disconnect(struct usb_interface *usb_intf)
 {
 	struct usb_skel *dev;
 	
-	struct ieee80211_hw *hw = usb_get_intfdata(usb_intf);
+//	struct ieee80211_hw *hw = usb_get_intfdata(usb_intf);
 	
 //	int minor = usb_intf->minor;
-	
+/*	
 	printk(KERN_INFO "WNA: disconnecting... \n");	
 	printk(KERN_INFO "WNA: freeing ieee80211 hw... \n");	
 	ieee80211_free_hw(hw);
 	printk(KERN_INFO "WNA: ieee80211 hw freed. \n");		
-
+*/
 	printk(KERN_INFO "WNA: nulling USB interface data... \n");	
 	dev = usb_get_intfdata(usb_intf);
 	usb_set_intfdata(usb_intf, NULL);
