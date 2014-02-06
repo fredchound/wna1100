@@ -717,7 +717,7 @@ static const struct ieee80211_ops wna_80211_ops = {
 	.get_ringparam		= wna_get_ringparam,
 	.tx_frames_pending	= wna_tx_frames_pending,
 */
-};
+
 
 
 
@@ -740,7 +740,7 @@ static int usb_probe(struct usb_interface *usb_intf,
 
 	
 	usb_dev = interface_to_usbdev(usb_intf);
-	usb_dev = usb_get_dev(usb_dev);
+	usb_get_dev(usb_dev); //increase reference count of USB dev struct
 	usb_reset_device(usb_dev);
 
 	hw = ieee80211_alloc_hw(sizeof(struct ath9k_htc_priv), &wna_80211_ops);	 
@@ -781,7 +781,7 @@ static void usb_disconnect(struct usb_interface *usb_intf)
 	printk(KERN_INFO "WNA: USB interface nulled. \n");	
 
 	printk(KERN_INFO "WNA: releasing the device... \n");	
-	usb_put_dev(interface_to_usbdev(usb_intf));
+	usb_put_dev(interface_to_usbdev(usb_intf)); //decrease ref count 
 	printk(KERN_INFO "WNA: device released. \n");		
 
 	/* give back our minor */
